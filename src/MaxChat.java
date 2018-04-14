@@ -12,36 +12,45 @@ public class MaxChat {
     private static int mage = 1;
 
     public static void main(String[] args) {
-        imput(4,"13005711862 13588625832,13505711862 13088625832,13588625832 18087925832,15005713862 13588625832");
+        imput(4, "13005711862 13588625832,13505711862 13088625832,13588625832 18087925832,15005713862 13588625832");
     }
 
     private static void imput(int i, String mums) {
         //拆分数据信息
         String[] split = mums.split(",");
-//        String str1 = split[0];
-//        String str2 = split[1];
-//        String str3 = split[2];
-//        String str4 = split[3];
-         statisticsNumber(4,split);
+        statisticsNumber(4, split);
     }
 
-    private static void statisticsNumber(int a,String[] split) {
+    private static void statisticsNumber(int a, String[] split) {
         HashMap<String, Integer> map = new HashMap<>();
-        List<Integer> list = new LinkedList<>();
+        HashMap<Integer, String> newMap = new HashMap<>();
+
         for (int i = 0; i < split.length; i++) {
             String[] split1 = split[i].split(" ");
-            for (String st:split1
-                 ) {
+            for (String st : split1
+                    ) {
+                //判断map中的key是否已经有这个元素了
                 if (map.containsKey(st)) {
-                    int o = (int)map.get(st) + mage;
+                    int o = (int) map.get(st) + mage;
                     map.put(st, o);
+//                    if (newMap.containsKey(o)) {
+//                        int exitValue =Integer.parseInt(newMap.get(o));
+//                        int newValue = Integer.parseInt(st);
+//                        if (exitValue>newValue ) {
+//                            st = String.valueOf(newValue);
+//                        }
+//                    }else {
+//
+//                    }
+                    newMap.put(o, st);
                 } else {
-                    map.put(st,mage);
+                    map.put(st, mage);
+                    newMap.put(mage, st);
                 }
             }
         }
         System.out.println(map);
-
+        System.out.println(newMap);
 //        if (map == null) {
 //            System.out.println("null");
 //        }else {
@@ -50,11 +59,8 @@ public class MaxChat {
 //            Arrays.sort(obj);
 //
 //        }
-        Set<String> strings = map.keySet();
-        for (String set:strings
-             ) {
-            list.add(map.get(set));
-        }
-        System.out.println(Collections.max(list));
+        Set<Integer> strings = newMap.keySet();
+        Integer max = Collections.max(strings);
+        System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max);
     }
 }
