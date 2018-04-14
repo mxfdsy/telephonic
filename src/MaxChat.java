@@ -53,12 +53,12 @@ public class MaxChat {
                 } else {
                     map.put(st, mage);
                     //判断newMap中是否有 1 这个数，我们把值小手机号码存到newMap里面
-                    if (newMap.containsKey(1)) {
+                    if (newMap.containsKey(mage)) {
                         int exitValue = BigInteger.valueOf(Long.parseLong(newMap.get(1))).intValue();
                         int newValue = BigInteger.valueOf(Long.parseLong(st)).intValue();
                         if (exitValue > newValue) {
                             st = String.valueOf(newValue);
-                            newMap.put(1, st);
+                            newMap.put(mage, st);
                         }
                     } else {
                         newMap.put(mage, st);
@@ -68,10 +68,12 @@ public class MaxChat {
         }
         System.out.println(map);
         System.out.println(newMap);
+
+        //获取最多的聊天次数
         Set<Integer> strings = newMap.keySet();
         Integer max = Collections.max(strings);
 
-        //获取同话次数一样多的人数
+        //获取通话次数一样多的人数
         List<Object> list = new ArrayList<>();
         Collection<Integer> values = map.values();
         Object[] objects =  values.toArray();
@@ -87,7 +89,7 @@ public class MaxChat {
         if (sameChatter == 1) {
             System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max);
         } else {
-            System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max +"拥有相同的聊天人数为"+sameChatter);
+            System.out.println("聊天狂人的是 " + newMap.get(max) + " 其聊天的次数为 " + max +" 拥有相同的聊天人数为 "+sameChatter);
         }
     }
 }
