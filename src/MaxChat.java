@@ -1,6 +1,8 @@
+import java.math.BigInteger;
 import java.util.*;
 
 /**
+ * @author 平凡的世界
  * 给定大量手机用户通话记录，找出其中通话次数最多的聊天狂人。
  * Created by 没想法的岁月 on 2018/4/13.
  * 输出格式 ：在一行中给出聊天狂人的手机号码及其通话次数，其间以空格分隔。如果这样的人不唯一，
@@ -12,7 +14,10 @@ public class MaxChat {
     private static int mage = 1;
 
     public static void main(String[] args) {
-        imput(4, "13005711862 13588625832,13505711862 13088625832,13588625832 18087925832,15005713862 13588625832");
+        imput(4, "13005711862 13588625832," +
+                "13005711862 13088625832," +
+                "15005713862 18087925832," +
+                "15005713862 13588625832");
     }
 
     private static void imput(int i, String mums) {
@@ -22,8 +27,9 @@ public class MaxChat {
     }
 
     private static void statisticsNumber(int a, String[] split) {
-        HashMap<String, Integer> map = new HashMap<>();
-        HashMap<Integer, String> newMap = new HashMap<>();
+
+        HashMap<String, Integer> map = new HashMap<>(a);
+        HashMap<Integer, String> newMap = new HashMap<>(a);
 
         for (int i = 0; i < split.length; i++) {
             String[] split1 = split[i].split(" ");
@@ -31,36 +37,50 @@ public class MaxChat {
                     ) {
                 //判断map中的key是否已经有这个元素了
                 if (map.containsKey(st)) {
-                    int o = (int) map.get(st) + mage;
+                    int o = map.get(st) + mage;
                     map.put(st, o);
-//                    if (newMap.containsKey(o)) {
-//                        int exitValue =Integer.parseInt(newMap.get(o));
-//                        int newValue = Integer.parseInt(st);
-//                        if (exitValue>newValue ) {
-//                            st = String.valueOf(newValue);
-//                        }
-//                    }else {
-//
-//                    }
-                    newMap.put(o, st);
+                    //判断newMap中是否有这个数，我们把值小手机号码存到newMap里面
+                    if (newMap.containsKey(o)) {
+                        int exitValue = BigInteger.valueOf(Long.parseLong(newMap.get(o))).intValue();
+                        int newValue = BigInteger.valueOf(Long.parseLong(st)).intValue();
+                        if (exitValue > newValue) {
+                            st = String.valueOf(newValue);
+                            newMap.put(o, st);
+                        }
+                    } else {
+                        newMap.put(o, st);
+                    }
                 } else {
                     map.put(st, mage);
-                    newMap.put(mage, st);
+                    //判断newMap中是否有 1 这个数，我们把值小手机号码存到newMap里面
+                    if (newMap.containsKey(1)) {
+                        int exitValue = BigInteger.valueOf(Long.parseLong(newMap.get(1))).intValue();
+                        int newValue = BigInteger.valueOf(Long.parseLong(st)).intValue();
+                        if (exitValue > newValue) {
+                            st = String.valueOf(newValue);
+                            newMap.put(1, st);
+                        }
+                    } else {
+                        newMap.put(mage, st);
+                    }
                 }
             }
         }
         System.out.println(map);
         System.out.println(newMap);
-//        if (map == null) {
-//            System.out.println("null");
-//        }else {
-//            Collection<Integer> values = map.values();
-//            Object[] obj = values.toArray();
-//            Arrays.sort(obj);
-//
-//        }
         Set<Integer> strings = newMap.keySet();
         Integer max = Collections.max(strings);
         System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max);
+
+        List<Object> list = new ArrayList<>();
+        Collection<Integer> values = map.values();
+        Object[] objects =  values.toArray();
+        for (Object obj: objects
+             ) {
+            if (max.equals(obj)) {
+                list.add(obj);
+            }
+        }
+        System.out.println(list.size());
     }
 }
