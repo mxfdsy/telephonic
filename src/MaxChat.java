@@ -70,8 +70,8 @@ public class MaxChat {
         System.out.println(newMap);
         Set<Integer> strings = newMap.keySet();
         Integer max = Collections.max(strings);
-        System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max);
 
+        //获取同话次数一样多的人数
         List<Object> list = new ArrayList<>();
         Collection<Integer> values = map.values();
         Object[] objects =  values.toArray();
@@ -81,6 +81,13 @@ public class MaxChat {
                 list.add(obj);
             }
         }
-        System.out.println(list.size());
+        int sameChatter = list.size();
+
+        //判断输出
+        if (sameChatter == 1) {
+            System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max);
+        } else {
+            System.out.println("聊天狂人是 " + newMap.get(max) + " 其聊天的次数为 " + max +"拥有相同的聊天人数为"+sameChatter);
+        }
     }
 }
