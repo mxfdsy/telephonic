@@ -91,5 +91,7 @@ public class MaxChat {
         } else {
             System.out.println("聊天狂人的是 " + newMap.get(max) + " 其聊天的次数为 " + max +" 拥有相同的聊天人数为 "+sameChatter);
         }
+
+        //改动
     }
 }
